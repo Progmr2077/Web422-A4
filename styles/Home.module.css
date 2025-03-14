@@ -1,0 +1,18 @@
+.page {
+  background-color: #f0f0f0;
+  padding: 20px;
+}
+
+.main {
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+}
+
+.rounded {
+  border-radius: 0.25rem;
+}

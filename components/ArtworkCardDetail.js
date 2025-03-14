@@ -20,36 +20,24 @@ export default function ArtworkCardDetail({ objectID }) {
     return null;
   }
 
-  const {
-    primaryImage,
-    title,
-    objectDate,
-    classification,
-    medium,
-    artistDisplayName,
-    artistWikidata_URL,
-    creditLine,
-    dimensions,
-  } = data;
-
   return (
     <Card>
-      {primaryImage && <Card.Img variant="top" src={primaryImage} alt={title || 'N/A'} />}
+      {data.primaryImage && <Card.Img variant="top" src={data.primaryImage} />}
       <Card.Body>
-        <Card.Title>{title || 'N/A'}</Card.Title>
+        <Card.Title>{data.title || 'N/A'}</Card.Title>
         <Card.Text>
-          <strong>Date:</strong> {objectDate || 'N/A'} <br />
-          <strong>Classification:</strong> {classification || 'N/A'} <br />
-          <strong>Medium:</strong> {medium || 'N/A'} <br /><br />
+          <strong>Date:</strong> {data.objectDate || 'N/A'} <br />
+          <strong>Classification:</strong> {data.classification || 'N/A'} <br />
+          <strong>Medium:</strong> {data.medium || 'N/A'} <br /><br />
           <strong>Artist:</strong> 
-          {artistDisplayName ? (
+          {data.artistDisplayName ? (
             <>
-              {artistDisplayName} <a href={artistWikidata_URL} target="_blank" rel="noreferrer">wiki</a>
+              {data.artistDisplayName} <a href={data.artistWikidata_URL} target="_blank" rel="noreferrer">wiki</a>
             </>
           ) : 'N/A'}
           <br />
-          <strong>Credit Line:</strong> {creditLine || 'N/A'} <br />
-          <strong>Dimensions:</strong> {dimensions || 'N/A'}
+          <strong>Credit Line:</strong> {data.creditLine || 'N/A'} <br />
+          <strong>Dimensions:</strong> {data.dimensions || 'N/A'}
         </Card.Text>
         <Link href={`/artwork/${objectID}`} passHref>
           <Button variant="primary">{objectID}</Button>
