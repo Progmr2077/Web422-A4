@@ -44,34 +44,49 @@ export default function AdvancedSearch() {
               <Form.Control
                 type="text"
                 placeholder="Search"
-                {...register('q', { required: true })}
-                className={errors.q ? 'is-invalid' : ''}
+                {...register('searchQuery', { required: true })}
+                className={errors.searchQuery ? 'is-invalid' : ''}
               />
-              {errors.q && <div className="invalid-feedback">This field is required</div>}
+              {errors.searchQuery && <div className="invalid-feedback">This field is required</div>}
             </Form.Group>
           </Col>
         </Row>
         <Row>
           <Col md={4}>
             <Form.Group className="mb-3">
-              <Form.Label>Geo Location</Form.Label>
-              <Form.Control type="text" placeholder="Geo Location" {...register('geoLocation')} />
+              <Form.Label>Search By</Form.Label>
+              <Form.Control as="select" {...register('SearchBy', { required: true })} className={errors.searchType ? 'is-invalid' : ''}>
+                <option value="Title">Title</option>
+                <option value="Tags">Tags</option>
+                <option value="Artist or Culture">Artist or Culture</option>
+              </Form.Control>
+              {errors.searchType && <div className="invalid-feedback">This field is required</div>}
             </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Form.Group className="mb-3">
-              <Form.Label>Medium</Form.Label>
-              <Form.Control type="text" placeholder="Medium" {...register('medium')} />
-            </Form.Group>
-          </Col>
-          <Col md={4}>
             <Form.Group className="mb-3">
               <Form.Check type="checkbox" label="Currently on View" {...register('isOnView')} />
               <Form.Check type="checkbox" label="Highlighted" {...register('isHighlight')} />
             </Form.Group>
           </Col>
+          <Col md={4}>
+            <Form.Group className="mb-3">
+              <Form.Label>Geo Location</Form.Label>
+              <Form.Control type="text" {...register('geoLocation')} />
+              <Form.Text className="text-muted">
+                Case Sensitive String (ie "Europe", "France", "Paris", "China", "New York", etc.), with multiple values separated by the | operator
+              </Form.Text>
+            </Form.Group>            
+          </Col>
+          <Col md={4}>
+            <Form.Group className="mb-3">
+              <Form.Label>Medium</Form.Label>
+              <Form.Control type="text" {...register('medium')} />
+              <Form.Text className="text-muted">
+                Case Sensitive String (ie: "Ceramics", "Furniture", "Paintings", "Sculpture", "Textiles", etc.), with multiple values separated by the | operator
+              </Form.Text>
+            </Form.Group>
+          </Col>
         </Row>
-        <Button variant="outline-light" type="submit">Search</Button> {/* Change button color */}
+        <Button variant="outline-light" type="submit">Submit</Button> {/* Change button color */}
       </Form>
     </>
   );
