@@ -43,7 +43,6 @@ export default function AdvancedSearch() {
               <Form.Label>Search Query</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Search"
                 {...register('searchQuery', { required: true })}
                 className={errors.searchQuery ? 'is-invalid' : ''}
               />
