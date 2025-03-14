@@ -54,11 +54,37 @@ export default function AdvancedSearch() {
           <Col md={4}>
             <Form.Group className="mb-3">
               <Form.Label>Search By</Form.Label>
-              <Form.Control as="select" {...register('SearchBy', { required: true })} className={errors.searchType ? 'is-invalid' : ''}>
-                <option value="Title">Title</option>
-                <option value="Tags">Tags</option>
-                <option value="Artist or Culture">Artist or Culture</option>
-              </Form.Control>
+              <div style={{ position: 'relative' }}>
+                <Form.Control
+                  as="select"
+                  {...register('SearchBy', { required: true })}
+                  className={errors.searchType ? 'is-invalid' : ''}
+                  style={{ paddingRight: '25px', appearance: 'none' }} // Changed to paddingRight
+                >
+                  <option value="Title">Title</option>
+                  <option value="Tags">Tags</option>
+                  <option value="Artist or Culture">Artist or Culture</option>
+                </Form.Control>
+                <div
+                  style={{
+                    position: 'absolute',
+                    right: '8px', // Changed to right
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    pointerEvents: 'none',
+                    zIndex: 1,
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    height="5"
+                    viewBox="0 0 10 5"
+                  >
+                    <path fill="#333" d="M0 0l5 5 5-5z" />
+                  </svg>
+                </div>
+              </div>
               {errors.searchType && <div className="invalid-feedback">This field is required</div>}
             </Form.Group>
             <Form.Group className="mb-3">
@@ -73,7 +99,7 @@ export default function AdvancedSearch() {
               <Form.Text className="text-muted">
                 Case Sensitive String (ie "Europe", "France", "Paris", "China", "New York", etc.), with multiple values separated by the | operator
               </Form.Text>
-            </Form.Group>            
+            </Form.Group>
           </Col>
           <Col md={4}>
             <Form.Group className="mb-3">
