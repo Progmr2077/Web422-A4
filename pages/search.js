@@ -7,18 +7,31 @@ export default function AdvancedSearch() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const router = useRouter();
 
-  const submitForm = data => {
+  // Function to handle form submission
+  const submitForm = (data) => {
     let queryString = 'searchBy=true';
     if (data.geoLocation) queryString += `&geoLocation=${data.geoLocation}`;
     if (data.medium) queryString += `&medium=${data.medium}`;
     queryString += `&isOnView=${data.isOnView}`;
     queryString += `&isHighlight=${data.isHighlight}`;
-    queryString += `&q=${data.q}`;
+    queryString += `&q=${data.searchQuery}`;
     router.push(`/artwork?${queryString}`);
+  };
+
+  // Function to handle search bar submission from navbar
+  const handleNavbarSearch = (event) => {
+    event.preventDefault();
+    const searchQuery = event.target.elements.searchQuery.value;
+
+    // If there is a search query, we only pass the query to the artwork page
+    if (searchQuery) {
+      router.push(`/artwork?q=${searchQuery}`);
+    }
   };
 
   return (
     <>
+      {/* Navbar with search bar */}
       <Navbar bg="primary" variant="dark" expand="lg" fixed="top">
         <Container>
           <Navbar.Brand>Jacob Rivera</Navbar.Brand>
@@ -28,14 +41,23 @@ export default function AdvancedSearch() {
               <Nav.Link href="/">Home</Nav.Link>
               <Nav.Link href="/search">Advanced Search</Nav.Link>
             </Nav>
-            <Form className="d-flex">
-              <FormControl type="search" placeholder="Search" className="me-2" aria-label="Search" />
-              <Button variant="success">Search</Button>
+            <Form className="d-flex" onSubmit={handleNavbarSearch}>
+              <FormControl
+                type="search"
+                placeholder="Search"
+                className="me-2"
+                aria-label="Search"
+                name="searchQuery" // Name to access the value in the navbar form
+                defaultValue={router.query.q || ''} // Allow pre-filled value when on the search page
+              />
+              <Button variant="success" type="submit">Search</Button>
             </Form>
           </Navbar.Collapse>
         </Container>
       </Navbar>
       <div style={{ marginTop: '60px' }}></div> {/* Add space after the navbar */}
+
+      {/* Advanced search form */}
       <Form onSubmit={handleSubmit(submitForm)}>
         <Row>
           <Col>
@@ -50,6 +72,7 @@ export default function AdvancedSearch() {
             </Form.Group>
           </Col>
         </Row>
+
         <Row>
           <Col md={4}>
             <Form.Group className="mb-3">
@@ -57,9 +80,9 @@ export default function AdvancedSearch() {
               <div style={{ position: 'relative' }}>
                 <Form.Control
                   as="select"
-                  {...register('SearchBy', { required: true })}
-                  className={errors.searchType ? 'is-invalid' : ''}
-                  style={{ paddingRight: '25px', appearance: 'none' }} // Changed to paddingRight
+                  {...register('searchBy', { required: true })}
+                  className={errors.searchBy ? 'is-invalid' : ''}
+                  style={{ paddingRight: '25px', appearance: 'none' }}
                 >
                   <option value="Title">Title</option>
                   <option value="Tags">Tags</option>
@@ -68,28 +91,24 @@ export default function AdvancedSearch() {
                 <div
                   style={{
                     position: 'absolute',
-                    right: '8px', // Changed to right
+                    right: '8px',
                     top: '50%',
                     transform: 'translateY(-50%)',
                     pointerEvents: 'none',
                     zIndex: 1,
                   }}
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="10"
-                    height="5"
-                    viewBox="0 0 10 5"
-                  >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="5" viewBox="0 0 10 5">
                     <path fill="#333" d="M0 0l5 5 5-5z" />
                   </svg>
                 </div>
               </div>
-              {errors.searchType && <div className="invalid-feedback">This field is required</div>}
+              {errors.searchBy && <div className="invalid-feedback">This field is required</div>}
             </Form.Group>
-            <Form.Group className="mb-3" style={{ marginTop: '110px' }}> {/* Added marginBottom */}
-            <Form.Check type="checkbox" label="Currently on View" {...register('isOnView')} />
-            <Form.Check type="checkbox" label="Highlighted" {...register('isHighlight')} />
+
+            <Form.Group className="mb-3">
+              <Form.Check type="checkbox" label="Currently on View" {...register('isOnView')} />
+              <Form.Check type="checkbox" label="Highlighted" {...register('isHighlight')} />
             </Form.Group>
           </Col>
           <Col md={4}>
@@ -111,7 +130,7 @@ export default function AdvancedSearch() {
             </Form.Group>
           </Col>
         </Row>
-        <Button variant="outline-light" type="submit">Submit</Button> {/* Change button color */}
+        <Button variant="outline-light" type="submit">Submit</Button>
       </Form>
     </>
   );

@@ -11,9 +11,17 @@ export default function ArtworkCard({ objectID }) {
   if (error) return <Error statusCode={404} />;
   if (!data) return null;
 
+  // Set a placeholder image if primaryImageSmall is not available
+  const placeholderImage = 'https://via.placeholder.com/375x375.png?text=[+Not+Available+]';
+
   return (
     <Card>
-      <Card.Img variant="top" src={data.primaryImageSmall || 'https://via.placeholder.com/375x375.png?text=[+Not+Available+]'} />
+      {/* Render primaryImageSmall if available, else render placeholder */}
+      <Card.Img 
+        variant="top" 
+        src={data.primaryImageSmall || placeholderImage} 
+        alt={data.title || 'Artwork image'} 
+      />
       <Card.Body>
         <Card.Title>{data.title || 'N/A'}</Card.Title>
         <Card.Text>
@@ -21,6 +29,7 @@ export default function ArtworkCard({ objectID }) {
           <strong>Classification:</strong> {data.classification || 'N/A'}<br />
           <strong>Medium:</strong> {data.medium || 'N/A'}
         </Card.Text>
+        {/* Button wrapped in Link */}
         <Link href={`/artwork/${objectID}`} passHref>
           <Button variant="primary">{objectID}</Button>
         </Link>

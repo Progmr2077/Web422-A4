@@ -1,18 +1,18 @@
-/*********************************************************************************
-* WEB422 – Assignment 4
-* I declare that this assignment is my own work in accordance with Seneca Academic Policy.
-* No part of this assignment has been copied manually or electronically from any other source
-* (including web sites) or distributed to other students.
-*
-* Name: Jacob Rivera Student ID: 109641233 Date: March 13th, 2025
-*
-********************************************************************************/
-
 import Head from "next/head";
 import { Row, Col, Image, Container, Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
+import { useRouter } from 'next/router'; // Import useRouter for routing
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
+  const router = useRouter(); // Initialize useRouter hook
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const query = e.target.search.value; // Get the search query
+    if (query) {
+      router.push(`/artwork?title=true&q=${encodeURIComponent(query)}`); // Redirect to artwork page with query
+    }
+  };
+
   return (
     <>
       <Head>
@@ -29,9 +29,16 @@ export default function Home() {
               <Nav.Link href="/">Home</Nav.Link>
               <Nav.Link href="/search">Advanced Search</Nav.Link>
             </Nav>
-            <Form className="d-flex">
-              <FormControl type="search" placeholder="Search" className="me-2" aria-label="Search" />
-              <Button variant="success">Search</Button>
+            {/* Updated Form with handleSearch on submit */}
+            <Form className="d-flex" onSubmit={handleSearch}>
+              <FormControl
+                type="search"
+                name="search"
+                placeholder="Search"
+                className="me-2"
+                aria-label="Search"
+              />
+              <Button variant="success" type="submit">Search</Button>
             </Form>
           </Navbar.Collapse>
         </Container>
