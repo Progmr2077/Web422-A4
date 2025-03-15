@@ -1,5 +1,5 @@
 import "@/styles/globals.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootswatch/dist/Flatly/bootstrap.css';
 import { SWRConfig } from 'swr';
 import Layout from '../components/Layout';
 
