@@ -35,7 +35,7 @@ export default function MainNav() {
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                         />
-                        <Button variant="outline-light" type="submit">Search</Button>
+                        <Button variant="btn btn-primary" type="submit">Search</Button>
                     </Form>
                 </Navbar.Collapse>
             </Container>

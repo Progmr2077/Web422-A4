@@ -129,7 +129,7 @@ export default function AdvancedSearch() {
             </Form.Group>
           </Col>
         </Row>
-        <Button variant="outline-light" type="submit">Submit</Button>
+        <Button variant="btn btn-primary" type="submit">Submit</Button>
       </Form>
     </>
   );
