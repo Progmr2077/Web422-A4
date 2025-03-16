@@ -106,8 +106,8 @@ export default function AdvancedSearch() {
               {errors.searchBy && <div className="invalid-feedback">This field is required</div>}
             </Form.Group>
             <Form.Group className="mb-3" style={{ marginTop: '80px'}}>
-            <Form.Check type="checkbox" label="Currently on View" {...register('isOnView')} />
             <Form.Check type="checkbox" label="Highlighted" {...register('isHighlight')} />
+            <Form.Check type="checkbox" label="Currently on View" {...register('isOnView')} />
             </Form.Group>
           </Col>
           <Col md={4}>
