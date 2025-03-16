@@ -13,61 +13,65 @@ export default function Artwork() {
   const [artworkList, setArtworkList] = useState(null);
   const [page, setPage] = useState(1);
   const router = useRouter();
-  let finalQuery = router.asPath.split('?')[1];
+  let finalQuery = router.asPath.includes('?') ? router.asPath.split('?')[1] : '';
 
-  const { data, error } = useSWR(`https://collectionapi.metmuseum.org/public/collection/v1/search?${finalQuery}`, fetcher);
+  const { data, error } = useSWR(
+    finalQuery ? `https://collectionapi.metmuseum.org/public/collection/v1/search?${finalQuery}` : null,
+    fetcher
+  );
 
   useEffect(() => {
-    if (data) {
+    if (data?.objectIDs?.length > 0) {
       const results = [];
       for (let i = 0; i < data.objectIDs.length; i += PER_PAGE) {
-        const chunk = data.objectIDs.slice(i, i + PER_PAGE);
-        results.push(chunk);
+        results.push(data.objectIDs.slice(i, i + PER_PAGE));
       }
       setArtworkList(results);
       setPage(1);
+    } else {
+      setArtworkList([]);
     }
   }, [data]);
 
   const previousPage = () => {
-    if (page > 1) setPage(page - 1);
+    if (page > 1) setPage(prev => prev - 1);
   };
 
   const nextPage = () => {
-    if (page < artworkList.length) setPage(page + 1);
+    if (page < artworkList.length) setPage(prev => prev + 1);
   };
 
   if (error) return <Error statusCode={404} />;
-  if (!artworkList) return null;
+  if (artworkList === null) return null;
 
   return (
     <>
       <Row className="gy-4 mt-4">
-      {artworkList.length > 0 ? (
-        artworkList[page - 1].map(objectID => (
-          <Col lg={3} md={4} sm={6} xs={12} key={objectID}>
-            <ArtworkCard objectID={objectID} />
+        {artworkList.length > 0 ? (
+          artworkList[page - 1].map(objectID => (
+            <Col lg={3} md={4} sm={6} xs={12} key={objectID}>
+              <ArtworkCard objectID={objectID} />
+            </Col>
+          ))
+        ) : (
+          <Col>
+            <Card>
+              <Card.Body>
+                <h4>Nothing Here</h4>
+                Try searching for something else.
+              </Card.Body>
+            </Card>
           </Col>
-        ))
-      ) : (
-        <Col>
-          <Card>
-            <Card.Body>
-              <h4>Nothing Found</h4>
-              Try searching for something else.
-            </Card.Body>
-          </Card>
-        </Col>
-      )}
-    </Row>
+        )}
+      </Row>
 
-      {artworkList.length > 0 && (
-        <Row>
+      {artworkList.length > 1 && (
+        <Row className="mt-4">
           <Col>
             <Pagination>
-              <Pagination.Prev onClick={previousPage} />
+              <Pagination.Prev onClick={previousPage} disabled={page === 1} />
               <Pagination.Item>{page}</Pagination.Item>
-              <Pagination.Next onClick={nextPage} />
+              <Pagination.Next onClick={nextPage} disabled={page >= artworkList.length} />
             </Pagination>
           </Col>
         </Row>
