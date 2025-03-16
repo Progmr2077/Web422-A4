@@ -68,9 +68,9 @@ export default function Artwork() {
         <Row>
           <Col>
             <Pagination>
-              <Pagination.Prev onClick={previousPage} disabled={page === 1} />
+              <Pagination.Prev onClick={previousPage}/>
               <Pagination.Item active>{page}</Pagination.Item>
-              <Pagination.Next onClick={nextPage} disabled={page >= artworkList.length} />
+              <Pagination.Next onClick={nextPage}/>
             </Pagination>
           </Col>
         </Row>
