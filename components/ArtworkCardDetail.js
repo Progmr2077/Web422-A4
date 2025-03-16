@@ -53,10 +53,6 @@ export default function ArtworkCardDetail({ objectID }) {
           <strong>Credit Line:</strong> {data.creditLine || 'N/A'} <br />
           <strong>Dimensions:</strong> {data.dimensions || 'N/A'}
         </Card.Text>
-        {/* Button wrapped in Link */}
-        <Link href={`/artwork/${objectID}`} passHref>
-          <Button variant="btn btn-outline-primary">{objectID}</Button>
-        </Link>
       </Card.Body>
     </Card>
   );

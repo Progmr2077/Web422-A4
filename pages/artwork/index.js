@@ -7,7 +7,7 @@ import ArtworkCard from '../../components/ArtworkCard';
 
 const PER_PAGE = 12;
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+const fetcher = url => fetch(url).then(res => res.json());
 
 export default function Artwork() {
   const [artworkList, setArtworkList] = useState(null);
@@ -15,10 +15,7 @@ export default function Artwork() {
   const router = useRouter();
   let finalQuery = router.asPath.split('?')[1];
 
-  const { data, error } = useSWR(
-    `https://collectionapi.metmuseum.org/public/collection/v1/search?${finalQuery}`,
-    fetcher
-  );
+  const { data, error } = useSWR(`https://collectionapi.metmuseum.org/public/collection/v1/search?${finalQuery}`, fetcher);
 
   useEffect(() => {
     if (data) {
@@ -46,31 +43,31 @@ export default function Artwork() {
   return (
     <>
       <Row className="gy-4 mt-4">
-        {artworkList.length > 0 ? (
-          artworkList[page - 1].map((objectID) => (
-            <Col lg={3} md={4} sm={6} xs={12} key={objectID}>
-              <ArtworkCard objectID={objectID} />
-            </Col>
-          ))
-        ) : (
-          <Col>
-            <Card>
-              <Card.Body>
-                <h4>Nothing Found</h4>
-                Try searching for something else.
-              </Card.Body>
-            </Card>
+      {artworkList.length > 0 ? (
+        artworkList[page - 1].map(objectID => (
+          <Col lg={3} md={4} sm={6} xs={12} key={objectID}>
+            <ArtworkCard objectID={objectID} />
           </Col>
-        )}
-      </Row>
+        ))
+      ) : (
+        <Col>
+          <Card>
+            <Card.Body>
+              <h4>Nothing Found</h4>
+              Try searching for something else.
+            </Card.Body>
+          </Card>
+        </Col>
+      )}
+    </Row>
 
       {artworkList.length > 0 && (
         <Row>
           <Col>
             <Pagination>
-              <Pagination.Prev onClick={previousPage}/>
-              <Pagination.Item active>{page}</Pagination.Item>
-              <Pagination.Next onClick={nextPage}/>
+              <Pagination.Prev onClick={previousPage} />
+              <Pagination.Item>{page}</Pagination.Item>
+              <Pagination.Next onClick={nextPage} />
             </Pagination>
           </Col>
         </Row>
