@@ -15,7 +15,7 @@ export default function MainNav() {
     return (
         <Navbar bg="primary" variant="dark" expand="lg" fixed="top">
             <Container>
-                <Navbar.Brand>Jacob Rivera</Navbar.Brand> {/* Replace 'Jacob Rivera' with your actual name */}
+                <Navbar.Brand>Jacob Rivera</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
