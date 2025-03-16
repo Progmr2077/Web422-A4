@@ -61,7 +61,7 @@ export default function AdvancedSearch() {
       <Form onSubmit={handleSubmit(submitForm)}>
         <Row>
           <Col>
-            <Form.Group className="mb-3">
+            <Form.Group className="mb-3" style={{ marginTop: '20px'}}>
               <Form.Label>Search Query</Form.Label>
               <Form.Control
                 type="text"
