@@ -55,7 +55,7 @@ export default function ArtworkCardDetail({ objectID }) {
         </Card.Text>
         {/* Button wrapped in Link */}
         <Link href={`/artwork/${objectID}`} passHref>
-          <Button variant="primary">{objectID}</Button>
+          <Button variant="btn btn-outline-primary">{objectID}</Button>
         </Link>
       </Card.Body>
     </Card>
