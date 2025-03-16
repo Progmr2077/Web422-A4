@@ -55,13 +55,12 @@ export default function AdvancedSearch() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <div style={{ marginTop: '60px' }}></div> {/* Add space after the navbar */}
 
       {/* Advanced search form */}
       <Form onSubmit={handleSubmit(submitForm)}>
         <Row>
           <Col>
-            <Form.Group className="mb-3" style={{ marginTop: '20px'}}>
+            <Form.Group className="mb-3" style={{ marginTop: '80px'}}>
               <Form.Label>Search Query</Form.Label>
               <Form.Control
                 type="text"
