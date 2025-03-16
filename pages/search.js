@@ -105,7 +105,7 @@ export default function AdvancedSearch() {
               </div>
               {errors.searchBy && <div className="invalid-feedback">This field is required</div>}
             </Form.Group>
-            <Form.Group className="mb-3" style={{ marginTop: '80px' }}>
+            <Form.Group className="mb-3" style={{ marginTop: '80px'}}>
             <Form.Check type="checkbox" label="Currently on View" {...register('isOnView')} />
             <Form.Check type="checkbox" label="Highlighted" {...register('isHighlight')} />
             </Form.Group>
@@ -129,6 +129,7 @@ export default function AdvancedSearch() {
             </Form.Group>
           </Col>
         </Row>
+        <div style={{ marginTop: '20px'}}></div>
         <Button variant="btn btn-primary" type="submit">Submit</Button>
       </Form>
     </>
