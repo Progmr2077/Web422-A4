@@ -3,6 +3,8 @@ import useSWR from 'swr';
 import { Card, Button } from 'react-bootstrap';
 import Link from 'next/link';
 import Error from 'next/error';
+import { useAtom } from 'jotai';
+import { favouritesAtom } from '../store';
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -11,6 +13,16 @@ export default function ArtworkCardDetail({ objectID }) {
     `https://collectionapi.metmuseum.org/public/collection/v1/objects/${objectID}`,
     fetcher
   );
+
+  const [favouritesList, setFavouritesList] = useAtom(favouritesAtom);
+  const [showAdded, setShowAdded] = useState(favouritesList.includes(objectID));
+
+  const favouritesClicked = () => {
+    if (!showAdded) {
+      setFavouritesList(current => [...current, objectID]);
+      setShowAdded(true);
+    }
+  };
 
   if (error) {
     return <Error statusCode={404} />;
@@ -52,6 +64,12 @@ export default function ArtworkCardDetail({ objectID }) {
           <br />
           <strong>Credit Line:</strong> {data.creditLine || 'N/A'} <br />
           <strong>Dimensions:</strong> {data.dimensions || 'N/A'}
+          <Button
+            variant={showAdded ? "primary" : "outline-primary"}
+            onClick={favouritesClicked}
+          >
+            {showAdded ? "+ Favourite (added)" : "+ Favourite"}
+          </Button>
         </Card.Text>
       </Card.Body>
     </Card>

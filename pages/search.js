@@ -2,10 +2,15 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { Row, Col, Form, Button, Navbar, Container, Nav, FormControl } from 'react-bootstrap';
 import MainNav from '../components/MainNav'; // Import the MainNav component
+import { useState } from 'react';
+import { useAtom } from 'jotai';
+import { searchHistoryAtom } from '@/store';
 
 export default function AdvancedSearch() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const router = useRouter();
+  const [searchHistory, setSearchHistory] = useAtom(searchHistoryAtom);
+  const [queryString, setQueryString] = useState('');
 
   // Function to handle form submission
   const submitForm = (data) => {
@@ -15,6 +20,7 @@ export default function AdvancedSearch() {
     queryString += `&isOnView=${data.isOnView}`;
     queryString += `&isHighlight=${data.isHighlight}`;
     queryString += `&q=${data.searchQuery}`;
+    setSearchHistory(current => [...current, queryString]);
     router.push(`/artwork?${queryString}`);
   };
 

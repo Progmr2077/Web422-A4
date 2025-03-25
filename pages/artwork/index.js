@@ -3,11 +3,44 @@ import useSWR from 'swr';
 import { useRouter } from 'next/router';
 import Error from 'next/error';
 import { Row, Col, Pagination, Card } from 'react-bootstrap';
-import ArtworkCard from '../../components/ArtworkCard';
+import { useAtom } from 'jotai';
+import { favouritesAtom } from '@/store';
+import { Button } from 'react-bootstrap';
 
 const PER_PAGE = 12;
 
 const fetcher = url => fetch(url).then(res => res.json());
+
+const ArtworkCard = ({ objectID }) => {
+  const [favouritesList, setFavouritesList] = useAtom(favouritesAtom);
+  const [showAdded, setShowAdded] = useState(favouritesList.includes(objectID));
+
+  const favouritesClicked = () => {
+    if (showAdded) {
+      setFavouritesList(current => current.filter(id => id !== objectID));
+    } else {
+      setFavouritesList(current => [...current, objectID]);
+    }
+    setShowAdded(!showAdded);
+  };
+
+  return (
+    <Card>
+      <Card.Body>
+        <Card.Title>Artwork Title</Card.Title>
+        <Card.Text>
+          Dimensions: 10x10
+          <Button
+            variant={showAdded ? 'primary' : 'outline-primary'}
+            onClick={favouritesClicked}
+          >
+            {showAdded ? '+ Favourite (added)' : '+ Favourite'}
+          </Button>
+        </Card.Text>
+      </Card.Body>
+    </Card>
+  );
+};
 
 export default function Artwork() {
   const [artworkList, setArtworkList] = useState(null);
